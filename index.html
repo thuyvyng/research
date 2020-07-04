@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<style>
+    div.bar {
+        display: inline-block;
+        width: 20px;
+        height: 75px;   /* We'll override this later */
+        background-color: teal;
+    }
+</style>
+</head>
+<body>
+    <h1> Titanic Suvivors </h1>
+    <h2> Thuy-Vy Nguyen </h2>
+<script>
+    d3.csv("/data/titanic.csv", function(d) {
+        table = [];
+        // console.log(d);
+        for (var i = 0; i < d.length; i += 1) {
+            table.push([parseFloat(d[i]["survived"]), parseFloat(d[i]["confidence"])]);
+        }
+        // console.log(table[0]);
+
+        //Width and height
+        var w = 1000;
+        var h = 50;
+        
+        //Data
+        //var dataset = [ 5, 10, 15, 20, 25 ];
+        var dataset = table;
+        
+        //Create SVG element
+        var svg = d3.select("body")
+                    .append("svg")
+                    .attr("width", 1500)
+                    .attr("height", 1000);
+
+        // var circles = svg.selectAll("circle")
+        //     .data(dataset)
+        //     .enter()
+        //     .append("circle");
+
+        // circles.attr("cx", function(d, i) {
+        //             return d[1] * 1000;
+        //         })
+        //         .attr("cy", function(d, i) {
+        //             return 100;
+        //         })
+        //         .attr("r", function(d) {
+        //             return 6;
+        //             //size is related to confidence
+        //         })
+        //         .attr("fill", function(d) {
+        //             return (d[0] == 0 ? "red" : "green");
+        //         });
+        var rect = svg.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("rect");
+
+        rect.attr("x", function(d, i) {
+                    return Math.floor(d[1] * 50)* 21;
+                })
+                .attr("y", function(d, i) {
+                    return (d[0] == 0 ? 172 : 150);
+                })
+                .attr("width", function(d) {
+                    return 20;
+                    //size is related to confidence
+                })
+                .attr("height", function(d) {
+                    return 20;
+                    //size is related to confidence
+                })
+                .attr("opacity", function(d) {
+                    return .1;
+                    //size is related to confidence
+                })
+                .attr("fill", function(d) {
+                    return (d[0] == 0 ? "red" : "green");
+                });
+    });
+</script>
+
+<!-- <div class="bar"></div> -->
+
+</div>
+</body>
+</html>
