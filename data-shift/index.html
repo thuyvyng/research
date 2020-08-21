@@ -16,17 +16,20 @@
     <h2> Thuy-Vy Nguyen </h2>
 <script>
     table = [];
-    d3.csv("/ui_data/test.csv", function(e) {
-        d3.csv("/ui_data/outlier.csv", function(d) {
-    
-            for (var i = 0; i < d.length; i += 1) {
-                table.push([parseFloat(d[i]["X"]), parseFloat(d[i]["Y"])]);
-            }
+    d3.csv("/ui_data/test.csv", function(d) {
+        d3.csv("/ui_data/outlier.csv", function(e) {
+
 
             for (var i = 0; i < e.length; i += 1) {
-                table.push([parseFloat(e[i]["X"]), parseFloat(e[i]["Y"])]);
+                table.push([parseFloat(e[i]["X"]), parseFloat(e[i]["Y"]), parseFloat(e[i]["Score"])]);
+
             }
-    
+
+            for (var i = 0; i < d.length; i += 1) {
+                table.push([parseFloat(d[i]["X"]), parseFloat(d[i]["Y"]), parseFloat(d[i]["Score"])]);
+
+            }
+
 
             //Width and height
             var wid = 2000;
@@ -53,16 +56,18 @@
                         return (-100*d[1] + 850);
                     })
                     .attr("r", function(d) {
-                        return 4;
+                        return 5;
                     })
                     .attr("opacity", function(d) {
-                        return .5;
+                        return .6 * d[2];
+                        
                     })
                     .attr("fill", function(d) {
-                        return "pink";
+                        return "pink"
                     });
-                });            
-    });
+        });  
+    });            
+
 </script>
 </div>
 </body>
