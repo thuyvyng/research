@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<style>
+    div.bar {
+        display: inline-block;
+        width: 20px;
+        height: 75px;   /* We'll override this later */
+        background-color: teal;
+    }
+</style>
+</head>
+<body>
+    <h1> Data Shift </h1>
+    <h2> Thuy-Vy Nguyen </h2>
+<script>
+    table = [];
+    d3.csv("/ui_data/test.csv", function(e) {
+        d3.csv("/ui_data/outlier.csv", function(d) {
+    
+            for (var i = 0; i < d.length; i += 1) {
+                table.push([parseFloat(d[i]["X"]), parseFloat(d[i]["Y"])]);
+            }
+
+            for (var i = 0; i < e.length; i += 1) {
+                table.push([parseFloat(e[i]["X"]), parseFloat(e[i]["Y"])]);
+            }
+    
+
+            //Width and height
+            var wid = 2000;
+            var h = 2500;
+            
+            //Data
+            var dataset = table;
+            
+            //Create SVG element
+            var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width", wid)
+                        .attr("height", h);
+
+            var circle = svg.selectAll("circle")
+                .data(dataset)
+                .enter()
+                .append("circle");
+
+            circle.attr("cx", function(d) {
+                        return (100*d[0] + 500);
+                    })
+                    .attr("cy", function(d) {
+                        return (-100*d[1] + 850);
+                    })
+                    .attr("r", function(d) {
+                        return 4;
+                    })
+                    .attr("opacity", function(d) {
+                        return .5;
+                    })
+                    .attr("fill", function(d) {
+                        return "pink";
+                    });
+                });            
+    });
+</script>
+</div>
+</body>
+</html>
