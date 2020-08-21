@@ -18,13 +18,24 @@
     d3.csv("/data/titanic.csv", function(d) {
         table = [];
 
+        var counter = new Array(5);
+        for (var i = 0; i < 5; i++) { 
+            counter[i] = new Array(5); 
+        } 
+
         for (var i = 0; i < d.length; i += 1) {
             table.push([parseFloat(d[i]["survived"]), parseFloat(d[i]["confidence"])]);
         }
+        for (var i = 0; i < 5; i++) { 
+            for (var j = 0; j < 5; j++) { 
+                counter[i][j] = 0; 
+            } 
+        }    
+  
 
         //Width and height
-        var w = 1000;
-        var h = 50;
+        var w = 2000;
+        var h = 2500;
         
         //Data
         var dataset = table;
@@ -32,8 +43,8 @@
         //Create SVG element
         var svg = d3.select("body")
                     .append("svg")
-                    .attr("width", 2000)
-                    .attr("height", 2500);
+                    .attr("width", w)
+                    .attr("height", h);
 
         var pos_counters = new Array(21).fill(0);
         var neg_counters = new Array(21).fill(0);
